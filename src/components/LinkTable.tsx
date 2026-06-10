@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import type { Doc, Id } from "../../convex/_generated/dataModel";
 import QRCodeDisplay from "./QRCodeDisplay";
 import AnalyticsDashboard from "./AnalyticsDashboard";
 import { 
@@ -9,11 +10,12 @@ import {
 } from "lucide-react";
 
 interface LinkTableProps {
-  links: any[];
+  links: Doc<"links">[];
   isLoading: boolean;
 }
 
 export default function LinkTable({ links, isLoading }: LinkTableProps) {
+  const [now] = useState(() => Date.now());
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "active" | "expired">("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -21,7 +23,7 @@ export default function LinkTable({ links, isLoading }: LinkTableProps) {
 
   // Modal states
   const [qrUrl, setQrUrl] = useState<string | null>(null);
-  const [analyticsLink, setAnalyticsLink] = useState<{ id: string; slug: string } | null>(null);
+  const [analyticsLink, setAnalyticsLink] = useState<{ id: Id<"links">; slug: string } | null>(null);
 
   const deleteLink = useMutation(api.links.deleteLink);
 
@@ -31,7 +33,7 @@ export default function LinkTable({ links, isLoading }: LinkTableProps) {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handleDelete = async (id: any) => {
+  const handleDelete = async (id: Id<"links">) => {
     if (!confirm("Are you sure you want to delete this shortened link and all of its analytics?")) return;
     setDeletingId(id);
     try {
@@ -49,9 +51,9 @@ export default function LinkTable({ links, isLoading }: LinkTableProps) {
     return `${redirectBase}/${slug}`;
   };
 
-  const checkExpired = (link: any) => {
+  const checkExpired = (link: Doc<"links">) => {
     if (link.expired) return true;
-    if (link.expiresAt && Date.now() > link.expiresAt) return true;
+    if (link.expiresAt && now > link.expiresAt) return true;
     return false;
   };
 
@@ -288,7 +290,7 @@ export default function LinkTable({ links, isLoading }: LinkTableProps) {
               </button>
             </div>
             
-            <AnalyticsDashboard linkId={analyticsLink.id as any} />
+            <AnalyticsDashboard linkId={analyticsLink.id} />
           </div>
         </div>
       )}

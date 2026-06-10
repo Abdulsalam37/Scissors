@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import type { Doc } from "../../convex/_generated/dataModel";
 import { useUser } from "@clerk/clerk-react";
 import LinkTable from "../components/LinkTable";
 import { LayoutDashboard, Link, MousePointerClick, ShieldCheck, ShieldAlert, Sparkles } from "lucide-react";
@@ -7,6 +9,7 @@ import { LayoutDashboard, Link, MousePointerClick, ShieldCheck, ShieldAlert, Spa
 export default function DashboardPage() {
   const { isLoaded, isSignedIn, user } = useUser();
   const links = useQuery(api.links.getUserLinks);
+  const [now] = useState(() => Date.now());
 
   if (!isLoaded) {
     return (
@@ -36,9 +39,9 @@ export default function DashboardPage() {
   const totalLinks = links ? links.length : 0;
   const totalClicks = links ? links.reduce((sum, link) => sum + link.clickCount, 0) : 0;
   
-  const checkExpired = (link: any) => {
+  const checkExpired = (link: Doc<"links">) => {
     if (link.expired) return true;
-    if (link.expiresAt && Date.now() > link.expiresAt) return true;
+    if (link.expiresAt && now > link.expiresAt) return true;
     return false;
   };
 
