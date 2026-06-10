@@ -1,6 +1,6 @@
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-
+import { Id } from "../../convex/_generated/dataModel";
 import {
   ResponsiveContainer,
   LineChart,
@@ -244,7 +244,7 @@ export default function AnalyticsDashboard({ linkId }: AnalyticsDashboardProps) 
                   itemStyle={{ color: "#ffffff" }}
                 />
                 <Bar dataKey="value" fill="#8b5cf6" radius={[6, 6, 0, 0]}>
-                  {referrersData.map((entry, index) => (
+                  {referrersData.map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={index === 0 ? "#8b5cf6" : index === 1 ? "#6366f1" : "#0ea5e9"} />
                   ))}
                 </Bar>
