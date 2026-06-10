@@ -4,8 +4,8 @@ import { api } from "../../convex/_generated/api";
 import QRCodeDisplay from "./QRCodeDisplay";
 import AnalyticsDashboard from "./AnalyticsDashboard";
 import { 
-  Search, Filter, Copy, Check, Trash2, QrCode, BarChart3, 
-  ExternalLink, Calendar, ShieldCheck, ShieldAlert, Loader2, X 
+  Search, Copy, Check, Trash2, QrCode, BarChart3, 
+  ExternalLink, Calendar, ShieldAlert, Loader2, X 
 } from "lucide-react";
 
 interface LinkTableProps {
@@ -190,7 +190,7 @@ export default function LinkTable({ links, isLoading }: LinkTableProps) {
                         ) : (
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-                            <span>Active</span>
+<span>Active</span>
                           </span>
                         )}
                       </td>

@@ -1,6 +1,7 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
-import { Download, Check, RefreshCw } from "lucide-react";
+import { Download, RefreshCw } from "lucide-react";
+import { useState } from "react";
 
 interface QRCodeDisplayProps {
   url: string;
@@ -9,7 +10,6 @@ interface QRCodeDisplayProps {
 export default function QRCodeDisplay({ url }: QRCodeDisplayProps) {
   const [fgColor, setFgColor] = useState("#ffffff");
   const [bgColor, setBgColor] = useState("#000000");
-  const [copied, setCopied] = useState(false);
 
   const canvasRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<HTMLDivElement>(null);
